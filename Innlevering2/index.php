@@ -7,7 +7,7 @@
 <body>
 <h1>Velkommen til vedlikeholdssystemet</h1>
 <ul>
-    <li><a href="klasse_vis.php">Vis alle klasser</a></li>
+    <li><a href="Innlevering2/klasse_vis.php">Vis alle klasser</a></li>
     <li><a href="klasse_registrer.php">Registrer ny klasse</a></li>
     <li><a href="klasse_slett.php">Slett klasse</a></li>
     <li><a href="student_vis.php">Vis alle studenter</a></li>
