@@ -8,11 +8,11 @@
 <h1>Velkommen til vedlikeholdssystemet</h1>
 <ul>
     <li><a href="Innlevering2/klasse_vis.php">Vis alle klasser</a></li>
-    <li><a href="klasse_registrer.php">Registrer ny klasse</a></li>
-    <li><a href="klasse_slett.php">Slett klasse</a></li>
-    <li><a href="student_vis.php">Vis alle studenter</a></li>
-    <li><a href="student_registrer.php">Registrer ny student</a></li>
-    <li><a href="student_slett.php">Slett student</a></li>
+    <li><a href="Innlevering2/klasse_registrer.php">Registrer ny klasse</a></li>
+    <li><a href="Innlevering2/klasse_slett.php">Slett klasse</a></li>
+    <li><a href="Innlevering2/student_vis.php">Vis alle studenter</a></li>
+    <li><a href="Innlevering2/student_registrer.php">Registrer ny student</a></li>
+    <li><a href="Innlevering2/student_slett.php">Slett student</a></li>
 </ul>
 </body>
 </html>
