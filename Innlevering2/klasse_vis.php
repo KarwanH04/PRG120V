@@ -1,30 +1,24 @@
-<?php /* vis-alle-klasser */
-/*
-Programmet skriver ut alle registrerte klasser
-*/
-include("db.php"); // Tilkobling til database
+<?php include("db.php"); ?>
 
-$sqlSetning = "SELECT * FROM klasse ORDER BY klassekode;";
-$sqlResultat = mysqli_query($conn, $sqlSetning) or die("Ikke mulig &aring; hente data fra databasen");
-/* SQL-setning sendt til database-serveren */
+<h2>Alle klasser</h2>
+<table border="1">
+<tr><th>Klassekode</th><th>Klassenavn</th><th>Studiumkode</th></tr>
 
-$antallRader = mysqli_num_rows($sqlResultat); /* Antall rader i resultatet beregnet */
+<?php
+$sql = "SELECT * FROM klasse";
+$resultat = $conn->query($sql);
 
-print("<h3>Registrerte klasser</h3>");
-print("<table border='1'>");
-print("<tr><th align='left'>Klassekode</th> <th align='left'>Klassenavn</th> <th align='left'>Studiumkode</th></tr>");
-
-for ($r = 1; $r <= $antallRader; $r++) {
-    $rad = mysqli_fetch_array($sqlResultat); /* Ny rad hentet fra spørringsresultatet */
-    $klassekode = $rad["klassekode"];
-    $klassenavn = $rad["klassenavn"];
-    $studiumkode = $rad["studiumkode"];
-
-    print("<tr><td>$klassekode</td><td>$klassenavn</td><td>$studiumkode</td></tr>");
+while ($rad = $resultat->fetch_assoc()) {
+    echo "<tr>
+            <td>{$rad['klassekode']}</td>
+            <td>{$rad['klassenavn']}</td>
+            <td>{$rad['studiumkode']}</td>
+          </tr>";
 }
-
-print("</table>");
-print("<p><a href='index.php'>Tilbake</a></p>");
-
-mysqli_close($conn);
+$conn->close();
 ?>
+</table>
+
+<p><a href="index.php">Tilbake</a></p>
+
+
