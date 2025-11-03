@@ -1,24 +1,28 @@
-<?php include("db.php"); ?>
+<?php  /* vis-alle-poststeder */
+/*
+/*  Programmet skriver ut alle registrerte poststeder
+*/
+  include("db.php");  /* tilkobling til database-serveren utf�rt og valg av database foretatt */
 
-<h2>Alle klasser</h2>
-<table border="1">
-<tr><th>Klassekode</th><th>Klassenavn</th><th>Studiumkode</th></tr>
+  $sqlSetning="SELECT * FROM klasse;";
+  
+  $sqlResultat=mysqli_query($db,$sqlSetning) or die ("ikke mulig &aring; hente data fra databasen");
+    /* SQL-setning sendt til database-serveren */
+	
+  $antallRader=mysqli_num_rows($sqlResultat);  /* antall rader i resultatet beregnet */
 
-<?php
-$sql = "SELECT * FROM klasse";
-$resultat = $conn->query($sql);
+  print ("<h3>Registrerte klasser</h3>");
+  print ("<table border=1>");  
+  print ("<tr><th align=left>klassekode</th>  <th align=left>klassenavn</th> <th align=left>studiumkode</th></tr>"); 
 
-while ($rad = $resultat->fetch_assoc()) {
-    echo "<tr>
-            <td>{$rad['klassekode']}</td>
-            <td>{$rad['klassenavn']}</td>
-            <td>{$rad['studiumkode']}</td>
-          </tr>";
-}
-$conn->close();
+  for ($r=1;$r<=$antallRader;$r++)
+    {
+      $rad=mysqli_fetch_array($sqlResultat);  /* ny rad hentet fra sp�rringsresultatet */
+      $klassekode=$rad["klassekode"];        /* ELLER $postnr=$rad[0]; */
+      $klassenavn=$rad["klassenavn"];    /* ELLER $poststed=$rad[1]; */
+      $studiumkode=$rad["studiumkode"];
+
+      print ("<tr> <td> $klassekode </td> <td> $klassenavn </td> <td>$studiumkode </td> </tr>");
+    }
+  print ("</table>"); 
 ?>
-</table>
-
-<p><a href="index.php">Tilbake</a></p>
-
-
