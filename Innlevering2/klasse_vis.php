@@ -7,8 +7,13 @@
 <?php
 $sql = "SELECT * FROM klasse";
 $resultat = $conn->query($sql);
+
 while ($rad = $resultat->fetch_assoc()) {
-    echo "<tr><td>{$rad['klassekode']}</td><td>{$rad['klassenavn']}</td><td>{$rad['studiumkode']}</td></tr>";
+    echo "<tr>
+            <td>{$rad['klassekode']}</td>
+            <td>{$rad['klassenavn']}</td>
+            <td>{$rad['studiumkode']}</td>
+          </tr>";
 }
 $conn->close();
 ?>
