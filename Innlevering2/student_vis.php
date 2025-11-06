@@ -6,11 +6,13 @@
 
 <?php
 $sql = "SELECT * FROM klasse";
-$resultat = $conn->query($sql);
-while ($rad = $resultat->fetxxxch_assoc()) {
+$sqlResultat = mysqli_query($db, $sql) or die("ikke mulig å hente data fra databasen");
+
+while ($rad = mysqli_fetch_assoc($sqlResultat)) {
     echo "<tr><td>{$rad['klassekode']}</td><td>{$rad['klassenavn']}</td><td>{$rad['studiumkode']}</td></tr>";
 }
-$conn->close();
+
+mysqli_close($db);
 ?>
 </table>
 
