@@ -1,28 +1,44 @@
-<?php include("db.php"); ?>
+<?php  /* registrer-klasse */
+/*
+/*  Programmet lager et HTML-skjema for å registrere en ny klasse
+/*  Programmet registrerer data (klassekode, klassenavn og studiumkode) i databasen
+*/
+?> 
 
-<h2>Registrer ny klasse</h2>
+<h3>Registrer ny klasse</h3>
 
-<form method="post">
-    Klassekode: <input type="text" name="klassekode"><br>
-    Klassenavn: <input type="text" name="klassenavn"><br>
-    Studiumkode: <input type="text" name="studiumkode"><br>
-    <input type="submit" name="lagre" value="Lagre">
+<form method="post" action="" id="registrerKlasseSkjema" name="registrerKlasseSkjema">
+  Klassekode: <input type="text" id="klassekode" name="klassekode" required /> <br/>
+  Klassenavn: <input type="text" id="klassenavn" name="klassenavn" required /> <br/>
+  Studiumkode: <input type="text" id="studiumkode" name="studiumkode" required /> <br/>
+  <input type="submit" value="Registrer klasse" id="registrerKlasseKnapp" name="registrerKlasseKnapp" /> 
+  <input type="reset" value="Nullstill" id="nullstill" name="nullstill" /> <br />
 </form>
 
-<?php
-if (isset($_POST['lagre'])) {
-    $kode = $_POST['klassekode'];
-    $navn = $_POST['klassenavn'];
-    $studium = $_POST['studiumkode'];
-    
-    $sql = "INSERT INTO klasse VALUES ('$kode','$navn','$studium')";
-    if ($conn->query($sql)) {
-        echo "<p>Klasse registrert!</p>";
-    } else {
-        echo "<p>Feil: " . $conn->error . "</p>";
-    }
-}
-$conn->close();
-?>
+<?php 
+  if (isset($_POST["registrerKlasseKnapp"])) {
+      $klassekode = $_POST["klassekode"];
+      $klassenavn = $_POST["klassenavn"];
+      $studiumkode = $_POST["studiumkode"];
 
-<p><a href="index.php">Tilbake</a></p>
+      if (!$klassekode || !$klassenavn || !$studiumkode) {
+          print("Alle felt må fylles ut (klassekode, klassenavn og studiumkode)");
+      } else {
+          include("db.php");  /* tilkobling til database-serveren utført og valg av database foretatt */
+
+          $sqlSetning = "SELECT * FROM klasse WHERE klassekode='$klassekode';";
+          $sqlResultat = mysqli_query($db, $sqlSetning) or die("ikke mulig å hente data fra databasen");
+          $antallRader = mysqli_num_rows($sqlResultat); 
+
+          if ($antallRader != 0) {  /* klassen er registrert fra før */
+              print("Klassen er registrert fra før");
+          } else {
+              $sqlSetning = "INSERT INTO klasse VALUES('$klassekode', '$klassenavn', '$studiumkode');";
+              mysqli_query($db, $sqlSetning) or die("ikke mulig å registrere data i databasen");
+              /* SQL-setning sendt til database-serveren */
+
+              print("Følgende klasse er nå registrert: $klassekode $klassenavn $studiumkode");
+          }
+      }
+  }
+?> 
