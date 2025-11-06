@@ -42,3 +42,5 @@
       }
   }
 ?> 
+
+<p><a href="index-oblig.html">Tilbake</a></p>
