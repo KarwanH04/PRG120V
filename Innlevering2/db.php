@@ -1,13 +1,11 @@
-<?php
-/* db.php - Kobling til databasen (lokal konfigurasjon) */
-
-$host = "127.0.0.1";      // eller "localhost"
-$username = "root";       // standard brukernavn i XAMPP/MAMP
-$password = "";           // skriv inn passord hvis du har satt ett
-$database = "skole";      // bytt til ditt databasenavn
-
-$db = mysqli_connect($host, $username, $password, $database)
-      or die("Ikke kontakt med database-server eller databasen finnes ikke");
-
+<?php /* db-tilkobling */
+/*
+/* Programmet foretar tilkobling til database-server og valg av database
+*/
+$host = getenv('DB_HOST');
+$username = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$database = getenv('DB_DATABASE');
+$db=mysqli_connect($host,$username,$password,$database) or die ("ikke kontakt med database-server");
 /* tilkobling til database-serveren utført */
 ?>
