@@ -1,12 +1,23 @@
-<?php include("db.php"); ?>
+<?php
+/* slett-klasse
+   Programmet viser en nedtrekksliste med alle klassekoder,
+   og lar brukeren velge en klasse som skal slettes fra databasen.
+*/
+
+include("db.php");  // Kobling til databasen
+?>
 
 <h2>Slett klasse</h2>
-<form method="post">
+
+<form method="post" action="">
     Velg klassekode:
-    <select name="klassekode">
+    <select name="klassekode" required>
+        <option value="">-- Velg klassekode --</option>
         <?php
-        $resultat = $conn->query("SELECT klassekode FROM klasse");
-        while ($rad = $resultat->fetch_assoc()) {
+        $sql = "SELECT klassekode FROM klasse";
+        $resultat = mysqli_query($db, $sql) or die("Feil ved henting av klasser");
+
+        while ($rad = mysqli_fetch_assoc($resultat)) {
             echo "<option value='{$rad['klassekode']}'>{$rad['klassekode']}</option>";
         }
         ?>
@@ -16,15 +27,28 @@
 
 <?php
 if (isset($_POST['slett'])) {
-    $kode = $_POST['klassekode'];
-    $sql = "DELETE FROM klasse WHERE klassekode='$kode'";
-    if ($conn->query($sql)) {
-        echo "<p>Klasse slettet!</p>";
+    $klassekode = $_POST['klassekode'];
+
+    if (!$klassekode) {
+        echo "<p>Du må velge en klassekode.</p>";
     } else {
-        echo "<p>Feil: " . $conn->error . "</p>";
+        // Sjekk om klassen finnes
+        $sjekk = "SELECT * FROM klasse WHERE klassekode='$klassekode'";
+        $resultat = mysqli_query($db, $sjekk);
+        $antall = mysqli_num_rows($resultat);
+
+        if ($antall == 0) {
+            echo "<p>Klassen finnes ikke i databasen.</p>";
+        } else {
+            $sqlSlett = "DELETE FROM klasse WHERE klassekode='$klassekode'";
+            if (mysqli_query($db, $sqlSlett)) {
+                echo "<p>Klassen <strong>$klassekode</strong> er slettet!</p>";
+            } else {
+                echo "<p>Feil under sletting: " . mysqli_error($db) . "</p>";
+            }
+        }
     }
 }
-$conn->close();
 ?>
 
 <p><a href="index.php">Tilbake</a></p>
