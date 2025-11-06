@@ -1,15 +1,28 @@
+<?php include("db.php"); ?>
+
+<h2>Registrer ny klasse</h2>
+
+<form method="post">
+    Klassekode: <input type="text" name="klassekode"><br>
+    Klassenavn: <input type="text" name="klassenavn"><br>
+    Studiumkode: <input type="text" name="studiumkode"><br>
+    <input type="submit" name="lagre" value="Lagre">
+</form>
+
 <?php
-/* db.php - Kobling til databasen */
-$host = "localhost";
-$user = "root";
-$password = ""; // skriv inn passordet ditt hvis du har ett
-$database = "skole"; // bytt til databasenavnet ditt
-
-// Oppretter tilkobling
-$conn = new mysqli($host, $user, $password, $database);
-
-// Sjekk om tilkoblingen virker
-if ($conn->connect_error) {
-    die("Feil ved tilkobling til databasen: " . $conn->connect_error);
+if (isset($_POST['lagre'])) {
+    $kode = $_POST['klassekode'];
+    $navn = $_POST['klassenavn'];
+    $studium = $_POST['studiumkode'];
+    
+    $sql = "INSERT INTO klasse VALUES ('$kode','$navn','$studium')";
+    if ($conn->query($sql)) {
+        echo "<p>Klasse registrert!</p>";
+    } else {
+        echo "<p>Feil: " . $conn->error . "</p>";
+    }
 }
+$conn->close();
 ?>
+
+<p><a href="index.php">Tilbake</a></p>
