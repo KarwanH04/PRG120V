@@ -22,7 +22,7 @@ if (isset($_POST['lagre'])) {
         echo "<p>Feil: " . $conn->error . "</p>";
     }
 }
-$conn->close();
+mysqli_close($db);
 ?>
 
 <p><a href="index.php">Tilbake</a></p>
