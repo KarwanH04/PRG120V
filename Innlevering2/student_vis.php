@@ -1,15 +1,25 @@
 <?php include("db.php"); ?>
 
-<h2>Alle klasser</h2>
+<h2>Alle studenter</h2>
 <table border="1">
-<tr><th>Klassekode</th><th>Klassenavn</th><th>Studiumkode</th></tr>
+<tr>
+  <th>Studentnr</th>
+  <th>Fornavn</th>
+  <th>Etternavn</th>
+  <th>Klassekode</th>
+</tr>
 
 <?php
-$sql = "SELECT * FROM klasse";
+$sql = "SELECT * FROM student";
 $sqlResultat = mysqli_query($db, $sql) or die("ikke mulig å hente data fra databasen");
 
 while ($rad = mysqli_fetch_assoc($sqlResultat)) {
-    echo "<tr><td>{$rad['klassekode']}</td><td>{$rad['klassenavn']}</td><td>{$rad['studiumkode']}</td></tr>";
+    echo "<tr>
+            <td>{$rad['studentnr']}</td>
+            <td>{$rad['fornavn']}</td>
+            <td>{$rad['etternavn']}</td>
+            <td>{$rad['klassekode']}</td>
+          </tr>";
 }
 
 mysqli_close($db);
