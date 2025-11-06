@@ -51,4 +51,4 @@ if (isset($_POST['slett'])) {
 }
 ?>
 
-<p><a href="index.php">Tilbake</a></p>
+<p><a href="index-oblig.html">Tilbake</a></p>
